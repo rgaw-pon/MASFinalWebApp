@@ -1,0 +1,47 @@
+﻿@model IEnumerable<MASFinalWebApp.Models.Insurance>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.InsuranceAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.InsuranceRange)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GeneralTermsAndConditions)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.InsuranceAmount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InsuranceRange)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GeneralTermsAndConditions)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.InsuranceID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.InsuranceID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.InsuranceID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
