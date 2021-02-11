@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MASFinalWebApp.Migrations
 {
     [DbContext(typeof(InsurexDbContext))]
-    [Migration("20210211143919_new_migr")]
+    [Migration("20210211163820_new_migr")]
     partial class new_migr
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -47,14 +47,10 @@ namespace MASFinalWebApp.Migrations
 
             modelBuilder.Entity("MASFinalWebApp.Models.InsuranceAgreement", b =>
                 {
-                    b.Property<int?>("InsuranceID")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("InsurancePackageID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ClientID")
-                        .HasColumnType("int");
+                    b.Property<int>("InsuranceAgreementID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
 
                     b.Property<string>("AdditionalInfo")
                         .HasColumnType("nvarchar(max)");
@@ -62,21 +58,23 @@ namespace MASFinalWebApp.Migrations
                     b.Property<DateTime>("BuyDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("ClientID")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("DateFrom")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DateTo")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("InsuranceAgreementID")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("InvoiceID")
+                    b.Property<int?>("InsuranceID")
                         .HasColumnType("int");
 
-                    b.Property<string>("InvoiceNo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int?>("InsurancePackageID")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("InvoiceID")
+                        .HasColumnType("int");
 
                     b.Property<int>("Price")
                         .HasColumnType("int");
@@ -84,13 +82,13 @@ namespace MASFinalWebApp.Migrations
                     b.Property<int>("State")
                         .HasColumnType("int");
 
-                    b.HasKey("InsuranceID", "InsurancePackageID", "ClientID");
+                    b.HasKey("InsuranceAgreementID");
 
                     b.HasIndex("ClientID");
 
-                    b.HasIndex("InsurancePackageID");
+                    b.HasIndex("InsuranceID");
 
-                    b.HasIndex("InvoiceNo");
+                    b.HasIndex("InsurancePackageID");
 
                     b.ToTable("InsuranceAgreement");
                 });
@@ -169,7 +167,13 @@ namespace MASFinalWebApp.Migrations
                     b.Property<DateTime>("DateOfIssue")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("InsuranceAgreementRefID")
+                        .HasColumnType("int");
+
                     b.HasKey("InvoiceNo");
+
+                    b.HasIndex("InsuranceAgreementRefID")
+                        .IsUnique();
 
                     b.ToTable("Invoice");
                 });
@@ -280,36 +284,24 @@ namespace MASFinalWebApp.Migrations
             modelBuilder.Entity("MASFinalWebApp.Models.InsuranceAgreement", b =>
                 {
                     b.HasOne("MASFinalWebApp.Models.Client", "Client")
-                        .WithMany()
+                        .WithMany("InsuranceAgreements")
                         .HasForeignKey("ClientID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("MASFinalWebApp.Models.Insurance", "Insurance")
-                        .WithMany()
-                        .HasForeignKey("InsuranceID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("InsuranceAgreements")
+                        .HasForeignKey("InsuranceID");
 
                     b.HasOne("MASFinalWebApp.Models.InsurancePackage", "InsurancePackage")
-                        .WithMany()
-                        .HasForeignKey("InsurancePackageID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MASFinalWebApp.Models.Invoice", "Invoice")
-                        .WithMany()
-                        .HasForeignKey("InvoiceNo")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("InsuranceAgreements")
+                        .HasForeignKey("InsurancePackageID");
 
                     b.Navigation("Client");
 
                     b.Navigation("Insurance");
 
                     b.Navigation("InsurancePackage");
-
-                    b.Navigation("Invoice");
                 });
 
             modelBuilder.Entity("MASFinalWebApp.Models.InsurancesInPackages", b =>
@@ -336,6 +328,17 @@ namespace MASFinalWebApp.Migrations
                     b.HasOne("MASFinalWebApp.Models.Owner", null)
                         .WithMany("Insurers")
                         .HasForeignKey("OwnerPersonID");
+                });
+
+            modelBuilder.Entity("MASFinalWebApp.Models.Invoice", b =>
+                {
+                    b.HasOne("MASFinalWebApp.Models.InsuranceAgreement", "InsuranceAgreement")
+                        .WithOne("Invoice")
+                        .HasForeignKey("MASFinalWebApp.Models.Invoice", "InsuranceAgreementRefID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("InsuranceAgreement");
                 });
 
             modelBuilder.Entity("MASFinalWebApp.Models.SportDiscipline", b =>
@@ -413,17 +416,31 @@ namespace MASFinalWebApp.Migrations
 
             modelBuilder.Entity("MASFinalWebApp.Models.Insurance", b =>
                 {
+                    b.Navigation("InsuranceAgreements");
+
                     b.Navigation("InsurancesInPackages");
+                });
+
+            modelBuilder.Entity("MASFinalWebApp.Models.InsuranceAgreement", b =>
+                {
+                    b.Navigation("Invoice");
                 });
 
             modelBuilder.Entity("MASFinalWebApp.Models.InsurancePackage", b =>
                 {
+                    b.Navigation("InsuranceAgreements");
+
                     b.Navigation("InsurancesInPackages");
                 });
 
             modelBuilder.Entity("MASFinalWebApp.Models.SportInsurance", b =>
                 {
                     b.Navigation("CoveredSports");
+                });
+
+            modelBuilder.Entity("MASFinalWebApp.Models.Client", b =>
+                {
+                    b.Navigation("InsuranceAgreements");
                 });
 
             modelBuilder.Entity("MASFinalWebApp.Models.Owner", b =>

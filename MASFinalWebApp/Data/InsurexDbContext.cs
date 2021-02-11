@@ -38,10 +38,13 @@ namespace MASFinalWebApp
             modelBuilder.Entity<Client>().ToTable("Client");
             modelBuilder.Entity<Employee>().ToTable("Employee");
             modelBuilder.Entity<InsuranceAgreement>().ToTable("InsuranceAgreement");
-            modelBuilder.Entity<InsuranceAgreement>().
-                HasKey(i => new { i.InsuranceID, i.InsurancePackageID, i.ClientID });
+            //modelBuilder.Entity<InsuranceAgreement>().
+            //    HasKey(i => new { i.InsuranceID, i.InsurancePackageID, i.ClientID, i.InvoiceID });
+          
             modelBuilder.Entity<Insurer>().ToTable("Insurer");
             modelBuilder.Entity<Invoice>().ToTable("Invoice");
+            modelBuilder.Entity<Invoice>().HasOne(i => i.InsuranceAgreement).WithOne(x => x.Invoice).OnDelete(DeleteBehavior.Cascade);
+
             modelBuilder.Entity<Owner>().ToTable("Owner");
             modelBuilder.Entity<Person>().ToTable("Person");
             modelBuilder.Entity<SportDiscipline>().ToTable("SportDiscipline");

@@ -1,0 +1,100 @@
+﻿@model IEnumerable<MASFinalWebApp.Models.InsuranceAgreement>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <!--
+            <th>
+                @Html.DisplayNameFor(model => model.InsuranceAgreementID)
+            </th>
+              -->
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BuyDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.State)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateFrom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateTo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AdditionalInfo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.InvoiceID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Insurance)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.InsurancePackage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Client)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <!--
+                <td>
+                    @Html.DisplayFor(modelItem => item.InsuranceAgreementID)
+                </td>
+                  -->
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BuyDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.State)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateFrom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateTo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AdditionalInfo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.InvoiceID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Insurance.InsuranceID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.InsurancePackage.InsurancePackageID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Client.PersonID)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

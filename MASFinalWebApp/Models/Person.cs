@@ -12,6 +12,7 @@ namespace MASFinalWebApp.Models
         public int PersonID { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
+        [Display (Name="Phone number")]
         public string PhoneNumber { get; set; }
         public string Address { get; set; }
 

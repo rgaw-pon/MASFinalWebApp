@@ -20,5 +20,7 @@ namespace MASFinalWebApp.Models
         [DataType(DataType.MultilineText)]
         public string GeneralTermsAndConditions { get; set; }
         public ICollection<InsurancesInPackages> InsurancesInPackages { get; set; }
+        public ICollection<InsuranceAgreement> InsuranceAgreements { get; set; }
+
     }
 }
