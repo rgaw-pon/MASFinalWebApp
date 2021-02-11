@@ -6,13 +6,15 @@ using System.Threading.Tasks;
 
 namespace MASFinalWebApp.Models
 {
-    public class Insurer
+    public abstract class Person
     {
         [Key]
-        public int InsurerID { get; set; }
+        public int PersonID { get; set; }
         public string Name { get; set; }
-        public string ContactInfo { get; set; }
-        public string InsurerLicenseNumber { get; set; }
-        
+        public string Surname { get; set; }
+        public string PhoneNumber { get; set; }
+        public string Address { get; set; }
+
+
     }
 }
