@@ -10,6 +10,7 @@ namespace MASFinalWebApp.Models
     {
       [Key]
       public int InsuranceID { get; set; }
+      public string Name { get; set; }
       public  float InsuranceAmount { get; set; }
       public  string InsuranceRange { get; set; }
       public  string GeneralTermsAndConditions { get; set; }

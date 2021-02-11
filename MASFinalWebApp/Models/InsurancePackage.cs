@@ -14,3 +14,7 @@ namespace MASFinalWebApp.Models
         public ICollection<InsurancesInPackages> InsurancesInPackages { get; set; }
     }
 }
+
+
+
+//Insurance - InsurancesInPackages - InsurancePackages
