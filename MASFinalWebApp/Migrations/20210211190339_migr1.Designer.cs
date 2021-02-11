@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MASFinalWebApp.Migrations
 {
     [DbContext(typeof(InsurexDbContext))]
-    [Migration("20210211163820_new_migr")]
-    partial class new_migr
+    [Migration("20210211190339_migr1")]
+    partial class migr1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -103,11 +103,16 @@ namespace MASFinalWebApp.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("InsurancePackageID1")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
                     b.HasKey("InsurancePackageID");
+
+                    b.HasIndex("InsurancePackageID1");
 
                     b.ToTable("InsurancePackage");
                 });
@@ -304,6 +309,13 @@ namespace MASFinalWebApp.Migrations
                     b.Navigation("InsurancePackage");
                 });
 
+            modelBuilder.Entity("MASFinalWebApp.Models.InsurancePackage", b =>
+                {
+                    b.HasOne("MASFinalWebApp.Models.InsurancePackage", null)
+                        .WithMany("InsuranceSubpackages")
+                        .HasForeignKey("InsurancePackageID1");
+                });
+
             modelBuilder.Entity("MASFinalWebApp.Models.InsurancesInPackages", b =>
                 {
                     b.HasOne("MASFinalWebApp.Models.Insurance", "Insurances")
@@ -431,6 +443,8 @@ namespace MASFinalWebApp.Migrations
                     b.Navigation("InsuranceAgreements");
 
                     b.Navigation("InsurancesInPackages");
+
+                    b.Navigation("InsuranceSubpackages");
                 });
 
             modelBuilder.Entity("MASFinalWebApp.Models.SportInsurance", b =>

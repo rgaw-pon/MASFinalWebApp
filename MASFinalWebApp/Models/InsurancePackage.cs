@@ -14,6 +14,7 @@ namespace MASFinalWebApp.Models
         public string Name { get; set; }
         [DataType(DataType.MultilineText)]
         public string Description { get; set; }
+        public ICollection<InsurancePackage> InsuranceSubpackages { get; set; }
         public ICollection<InsurancesInPackages> InsurancesInPackages { get; set; }
         public ICollection<InsuranceAgreement> InsuranceAgreements { get; set; }
     }

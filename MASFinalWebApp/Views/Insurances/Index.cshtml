@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<MASFinalWebApp.Models.Insurance>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Insurances";
 }
 <head>
     <style>
@@ -47,8 +47,11 @@
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.InsuranceID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.InsuranceID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.InsuranceID">Delete</a>
+                <a asp-action="Details" asp-route-id="@item.InsuranceID">Details</a>
+                @*
+        |
+        <a asp-action="Delete" asp-route-id="@item.InsuranceID">Delete</a>
+                *@
             </td>
         </tr>
 }

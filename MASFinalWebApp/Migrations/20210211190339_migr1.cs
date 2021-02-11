@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MASFinalWebApp.Migrations
 {
-    public partial class new_migr : Migration
+    public partial class migr1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -30,11 +30,18 @@ namespace MASFinalWebApp.Migrations
                     InsurancePackageID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    InsurancePackageID1 = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_InsurancePackage", x => x.InsurancePackageID);
+                    table.ForeignKey(
+                        name: "FK_InsurancePackage_InsurancePackage_InsurancePackageID1",
+                        column: x => x.InsurancePackageID1,
+                        principalTable: "InsurancePackage",
+                        principalColumn: "InsurancePackageID",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -312,6 +319,11 @@ namespace MASFinalWebApp.Migrations
                 name: "IX_InsuranceAgreement_InsurancePackageID",
                 table: "InsuranceAgreement",
                 column: "InsurancePackageID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InsurancePackage_InsurancePackageID1",
+                table: "InsurancePackage",
+                column: "InsurancePackageID1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_InsurancesInPackages_InsurancePackageID",

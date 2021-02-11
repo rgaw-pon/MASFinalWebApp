@@ -1,44 +1,86 @@
 ﻿@model MASFinalWebApp.Models.Client
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Client details";
 }
 
-<h1>Details</h1>
+<h1>Details of client @Html.DisplayFor(model => model.Name) @Html.DisplayFor(model => model.Surname)  </h1>
 
 <div>
-    <h4>Client</h4>
+
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.SocialSecurityNumber)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.SocialSecurityNumber)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Name)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Name)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Surname)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Surname)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.PhoneNumber)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.PhoneNumber)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Address)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Address)
+        </dd>
+        <dt class="col-sm-2">
+            Insurances List
+        </dt>
+        <dd class="col-sm-10">
+            <table class="table">
+                @foreach (var item in Model.InsuranceAgreements)
+                {
+                    @if (item.Insurance != null)
+                    {
+                        <tr>
+                            <td>
+
+                                <a asp-controller="Insurances" asp-action="Details" asp-route-id="@item.Insurance.InsuranceID">
+                                    @Html.DisplayFor(modelItem => item.Insurance.Name)
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                }
+            </table>
+        </dd>
+        <dt class="col-sm-2">
+            Insurances Packages List
+        </dt>
+        <dd class="col-sm-10">
+            <table class="table">
+                @foreach (var item in Model.InsuranceAgreements)
+                {
+                    if (item.InsurancePackage != null)
+                    {
+                        <tr>
+                            <td>
+
+                                <a asp-controller="InsurancePackages" asp-action="Details" asp-route-id="@item.InsurancePackage.InsurancePackageID">
+                                    @Html.DisplayFor(modelItem => item.InsurancePackage.Name)
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                }
+            </table>
         </dd>
     </dl>
 </div>

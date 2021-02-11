@@ -1,14 +1,15 @@
 ﻿@model IEnumerable<MASFinalWebApp.Models.InsuranceAgreement>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Insurance Agreements";
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<h1>Insurance Agreements</h1>
+@*
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+*@
 <table class="table">
     <thead>
         <tr>
@@ -78,22 +79,48 @@
                     @Html.DisplayFor(modelItem => item.AdditionalInfo)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.InvoiceID)
+                    @if (item.Invoice != null)
+                    {
+                        <a asp-controller="Invoices" asp-action="Details" asp-route-id="@( item.Invoice.InvoiceNo)">
+                            @Html.DisplayFor(modelItem => item.Invoice.InvoiceNo)
+                        </a>
+                    }
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Insurance.InsuranceID)
+                    @if (item.Insurance != null)
+                    {
+                        <a asp-controller="Insurances" asp-action="Details" asp-route-id="@item.Insurance.InsuranceID">
+                            @Html.DisplayFor(modelItem => item.Insurance.Name)
+                        </a>
+                    }
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.InsurancePackage.InsurancePackageID)
+                    @if (item.InsurancePackage != null)
+                    {
+                        <a asp-controller="InsurancePackages" asp-action="Details" asp-route-id="@item.InsurancePackage.InsurancePackageID">
+                            @Html.DisplayFor(modelItem => item.InsurancePackage.Name)
+                        </a>
+                    }
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Client.PersonID)
+                    <a asp-controller="Clients" asp-action="Details" asp-route-id="@item.Client.PersonID">
+                        @{
+                            string clientFullName = item.Client.Name + " " + item.Client.Surname;
+                        }
+                        @Html.DisplayFor(modelItem => clientFullName)
+                    </a>
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                    @*<!--@Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                        <a asp-action="Details" asp-route-id="@item.InsuranceAgreementID">Details</a> |
+
+                                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                        -->
+                    *@
                 </td>
+
+
             </tr>
         }
     </tbody>

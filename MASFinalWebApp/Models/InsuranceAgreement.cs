@@ -28,9 +28,8 @@ namespace MASFinalWebApp.Models
         public int? InsurancePackageID { get; set; }
         public int ClientID { get; set; }
 
+        [Display(Name = "Invoice")]
         public int? InvoiceID { get; set; }
-
-        //public ICollection<Person> Beneficiaries { get; set; }
 
         public virtual Insurance? Insurance { get; set; }
         [Display(Name = "Insurance package")]

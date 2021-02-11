@@ -36,6 +36,9 @@ namespace MASFinalWebApp.Controllers
             var insurancePackage = await _context.InsurancePackages
                 .Include(s => s.InsurancesInPackages)
                 .ThenInclude(s => s.Insurances)
+                .Include(s=>s.InsuranceAgreements)
+                .ThenInclude(s=>s.Client)
+                .Include(s=> s.InsuranceSubpackages)
                 .FirstOrDefaultAsync(m => m.InsurancePackageID == id);
             if (insurancePackage == null)
             {

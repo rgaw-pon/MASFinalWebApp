@@ -101,11 +101,16 @@ namespace MASFinalWebApp.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("InsurancePackageID1")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
                     b.HasKey("InsurancePackageID");
+
+                    b.HasIndex("InsurancePackageID1");
 
                     b.ToTable("InsurancePackage");
                 });
@@ -302,6 +307,13 @@ namespace MASFinalWebApp.Migrations
                     b.Navigation("InsurancePackage");
                 });
 
+            modelBuilder.Entity("MASFinalWebApp.Models.InsurancePackage", b =>
+                {
+                    b.HasOne("MASFinalWebApp.Models.InsurancePackage", null)
+                        .WithMany("InsuranceSubpackages")
+                        .HasForeignKey("InsurancePackageID1");
+                });
+
             modelBuilder.Entity("MASFinalWebApp.Models.InsurancesInPackages", b =>
                 {
                     b.HasOne("MASFinalWebApp.Models.Insurance", "Insurances")
@@ -429,6 +441,8 @@ namespace MASFinalWebApp.Migrations
                     b.Navigation("InsuranceAgreements");
 
                     b.Navigation("InsurancesInPackages");
+
+                    b.Navigation("InsuranceSubpackages");
                 });
 
             modelBuilder.Entity("MASFinalWebApp.Models.SportInsurance", b =>
