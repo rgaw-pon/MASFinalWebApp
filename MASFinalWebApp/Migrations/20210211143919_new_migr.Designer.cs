@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MASFinalWebApp.Migrations
 {
     [DbContext(typeof(InsurexDbContext))]
-    [Migration("20210211125038_migr3")]
-    partial class migr3
+    [Migration("20210211143919_new_migr")]
+    partial class new_migr
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -102,8 +102,12 @@ namespace MASFinalWebApp.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<string>("Name")
+                    b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("InsurancePackageID");
 

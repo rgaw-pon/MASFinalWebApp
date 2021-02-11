@@ -3,14 +3,23 @@
 @{
     ViewData["Title"] = "Index";
 }
+<head>
+    <style>
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
 
-<h1>Index</h1>
+        </style>
+    </head>
+
+<h1>Insurances</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
 </p>
 <table class="table">
     <thead>
+        
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.InsuranceAmount)

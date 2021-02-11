@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MASFinalWebApp.Migrations
 {
-    public partial class migr : Migration
+    public partial class new_migr : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,6 +13,7 @@ namespace MASFinalWebApp.Migrations
                 {
                     InsuranceID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     InsuranceAmount = table.Column<float>(type: "real", nullable: false),
                     InsuranceRange = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     GeneralTermsAndConditions = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -28,7 +29,8 @@ namespace MASFinalWebApp.Migrations
                 {
                     InsurancePackageID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -47,6 +49,22 @@ namespace MASFinalWebApp.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Invoice", x => x.InvoiceNo);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Person",
+                columns: table => new
+                {
+                    PersonID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Surname = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Person", x => x.PersonID);
                 });
 
             migrationBuilder.CreateTable(
@@ -109,57 +127,6 @@ namespace MASFinalWebApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "SportDiscipline",
-                columns: table => new
-                {
-                    SportDisciplineID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    SportInsuranceID = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SportDiscipline", x => x.SportDisciplineID);
-                    table.ForeignKey(
-                        name: "FK_SportDiscipline_SportInsurance_SportInsuranceID",
-                        column: x => x.SportInsuranceID,
-                        principalTable: "SportInsurance",
-                        principalColumn: "InsuranceID",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "InsuranceAgreement",
-                columns: table => new
-                {
-                    InsuranceID = table.Column<int>(type: "int", nullable: false),
-                    InsurancePackageID = table.Column<int>(type: "int", nullable: false),
-                    ClientID = table.Column<int>(type: "int", nullable: false),
-                    InsuranceAgreementID = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Price = table.Column<int>(type: "int", nullable: false),
-                    BuyDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    State = table.Column<int>(type: "int", nullable: false),
-                    DateFrom = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateTo = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    AdditionalInfo = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_InsuranceAgreement", x => new { x.InsuranceID, x.InsurancePackageID, x.ClientID });
-                    table.ForeignKey(
-                        name: "FK_InsuranceAgreement_Insurance_InsuranceID",
-                        column: x => x.InsuranceID,
-                        principalTable: "Insurance",
-                        principalColumn: "InsuranceID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_InsuranceAgreement_InsurancePackage_InsurancePackageID",
-                        column: x => x.InsurancePackageID,
-                        principalTable: "InsurancePackage",
-                        principalColumn: "InsurancePackageID",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AutocascoInsurance",
                 columns: table => new
                 {
@@ -175,39 +142,12 @@ namespace MASFinalWebApp.Migrations
                         principalTable: "Insurance",
                         principalColumn: "InsuranceID",
                         onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Insurer",
-                columns: table => new
-                {
-                    InsurerID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ContactInfo = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    InsurerLicenseNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    OwnerPersonID = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Insurer", x => x.InsurerID);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Person",
-                columns: table => new
-                {
-                    PersonID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Surname = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    OwnerPersonID = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Person", x => x.PersonID);
+                    table.ForeignKey(
+                        name: "FK_AutocascoInsurance_Person_OwnerID",
+                        column: x => x.OwnerID,
+                        principalTable: "Person",
+                        principalColumn: "PersonID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -265,6 +205,93 @@ namespace MASFinalWebApp.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "SportDiscipline",
+                columns: table => new
+                {
+                    SportDisciplineID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SportInsuranceID = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SportDiscipline", x => x.SportDisciplineID);
+                    table.ForeignKey(
+                        name: "FK_SportDiscipline_SportInsurance_SportInsuranceID",
+                        column: x => x.SportInsuranceID,
+                        principalTable: "SportInsurance",
+                        principalColumn: "InsuranceID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "InsuranceAgreement",
+                columns: table => new
+                {
+                    InsuranceID = table.Column<int>(type: "int", nullable: false),
+                    InsurancePackageID = table.Column<int>(type: "int", nullable: false),
+                    ClientID = table.Column<int>(type: "int", nullable: false),
+                    InsuranceAgreementID = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Price = table.Column<int>(type: "int", nullable: false),
+                    BuyDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    State = table.Column<int>(type: "int", nullable: false),
+                    DateFrom = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateTo = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    AdditionalInfo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    InvoiceID = table.Column<int>(type: "int", nullable: false),
+                    InvoiceNo = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_InsuranceAgreement", x => new { x.InsuranceID, x.InsurancePackageID, x.ClientID });
+                    table.ForeignKey(
+                        name: "FK_InsuranceAgreement_Client_ClientID",
+                        column: x => x.ClientID,
+                        principalTable: "Client",
+                        principalColumn: "PersonID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_InsuranceAgreement_Insurance_InsuranceID",
+                        column: x => x.InsuranceID,
+                        principalTable: "Insurance",
+                        principalColumn: "InsuranceID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_InsuranceAgreement_InsurancePackage_InsurancePackageID",
+                        column: x => x.InsurancePackageID,
+                        principalTable: "InsurancePackage",
+                        principalColumn: "InsurancePackageID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_InsuranceAgreement_Invoice_InvoiceNo",
+                        column: x => x.InvoiceNo,
+                        principalTable: "Invoice",
+                        principalColumn: "InvoiceNo",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Insurer",
+                columns: table => new
+                {
+                    InsurerID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ContactInfo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    InsurerLicenseNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    OwnerPersonID = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Insurer", x => x.InsurerID);
+                    table.ForeignKey(
+                        name: "FK_Insurer_Owner_OwnerPersonID",
+                        column: x => x.OwnerPersonID,
+                        principalTable: "Owner",
+                        principalColumn: "PersonID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AutocascoInsurance_OwnerID",
                 table: "AutocascoInsurance",
@@ -281,6 +308,11 @@ namespace MASFinalWebApp.Migrations
                 column: "InsurancePackageID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_InsuranceAgreement_InvoiceNo",
+                table: "InsuranceAgreement",
+                column: "InvoiceNo");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_InsurancesInPackages_InsurancePackageID",
                 table: "InsurancesInPackages",
                 column: "InsurancePackageID");
@@ -291,54 +323,13 @@ namespace MASFinalWebApp.Migrations
                 column: "OwnerPersonID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Person_OwnerPersonID",
-                table: "Person",
-                column: "OwnerPersonID");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_SportDiscipline_SportInsuranceID",
                 table: "SportDiscipline",
                 column: "SportInsuranceID");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_InsuranceAgreement_Client_ClientID",
-                table: "InsuranceAgreement",
-                column: "ClientID",
-                principalTable: "Client",
-                principalColumn: "PersonID",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_AutocascoInsurance_Person_OwnerID",
-                table: "AutocascoInsurance",
-                column: "OwnerID",
-                principalTable: "Person",
-                principalColumn: "PersonID",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Insurer_Owner_OwnerPersonID",
-                table: "Insurer",
-                column: "OwnerPersonID",
-                principalTable: "Owner",
-                principalColumn: "PersonID",
-                onDelete: ReferentialAction.Restrict);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Person_Owner_OwnerPersonID",
-                table: "Person",
-                column: "OwnerPersonID",
-                principalTable: "Owner",
-                principalColumn: "PersonID",
-                onDelete: ReferentialAction.Restrict);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Owner_Person_PersonID",
-                table: "Owner");
-
             migrationBuilder.DropTable(
                 name: "AutocascoInsurance");
 
@@ -355,9 +346,6 @@ namespace MASFinalWebApp.Migrations
                 name: "Insurer");
 
             migrationBuilder.DropTable(
-                name: "Invoice");
-
-            migrationBuilder.DropTable(
                 name: "PropertyInsurance");
 
             migrationBuilder.DropTable(
@@ -367,19 +355,22 @@ namespace MASFinalWebApp.Migrations
                 name: "Client");
 
             migrationBuilder.DropTable(
+                name: "Invoice");
+
+            migrationBuilder.DropTable(
                 name: "InsurancePackage");
+
+            migrationBuilder.DropTable(
+                name: "Owner");
 
             migrationBuilder.DropTable(
                 name: "SportInsurance");
 
             migrationBuilder.DropTable(
-                name: "Insurance");
-
-            migrationBuilder.DropTable(
                 name: "Person");
 
             migrationBuilder.DropTable(
-                name: "Owner");
+                name: "Insurance");
         }
     }
 }

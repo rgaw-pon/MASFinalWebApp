@@ -10,11 +10,11 @@ namespace MASFinalWebApp.Models
     {
         [Key]
         public int InsurancePackageID { get; set; }
+        [StringLength(100)]
         public string Name { get; set; }
+        [DataType(DataType.MultilineText)]
+        public string Description { get; set; }
         public ICollection<InsurancesInPackages> InsurancesInPackages { get; set; }
     }
 }
 
-
-
-//Insurance - InsurancesInPackages - InsurancePackages
