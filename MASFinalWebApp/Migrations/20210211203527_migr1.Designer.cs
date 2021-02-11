@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MASFinalWebApp.Migrations
 {
     [DbContext(typeof(InsurexDbContext))]
-    [Migration("20210211190339_migr1")]
+    [Migration("20210211203527_migr1")]
     partial class migr1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
